@@ -25,6 +25,8 @@ public class CoreNLPSegment {
 
     public static void main(String[] args) throws IOException {
 
+        String inputfile = "data/clean_ch.txt";
+        String resultfile = "data/ch.txt";
 
 
         // StanfordCoreNLP pipeline = new StanfordCoreNLP("StanfordCoreNLP-chinese.properties");
@@ -34,11 +36,11 @@ public class CoreNLPSegment {
         // Add your text here!
         WriteToFileExample fileExample = new WriteToFileExample();
 
-        BufferedReader bufread = fileExample.readFile("clean_ch.txt");
+        BufferedReader bufread = fileExample.readFile(inputfile);
         String read;
         int flag = 1;
         while ((read = bufread.readLine()) != null) {
-            System.out.println("read "+flag+": "+read+'\n');
+            System.out.println("read "+flag+": "+read);
 
             String text = read;
             Annotation document = new Annotation(text);
@@ -51,7 +53,7 @@ public class CoreNLPSegment {
             List<CoreMap> sentences = document.get(CoreAnnotations.SentencesAnnotation.class);
 
 
-            fileExample.writeFile(flag+" " , "ch.txt");
+            fileExample.writeFile(flag+" " , resultfile);
 
             for (CoreMap sentence : sentences) {
                 // traversing the words in the current sentence
@@ -66,7 +68,7 @@ public class CoreNLPSegment {
 
                     // System.out.println(word + "--" + pos + "--" + ne);
 
-                    fileExample.writeFile(ne, "ch.txt");
+                    fileExample.writeFile(ne, resultfile);
                 }
 
 
@@ -81,7 +83,7 @@ public class CoreNLPSegment {
 
             }
             // get entity comb
-            fileExample.writeFile("\n", "ch.txt");
+            fileExample.writeFile("\n", resultfile);
             flag += 1;
         }
 
