@@ -25,13 +25,12 @@ public class CoreNLPSegment {
 
     public static void main(String[] args) throws IOException {
 
-        String inputfile = "data/clean_ch.txt";
-        String resultfile = "data/ch.txt";
+        String inputfile = "data/sentences.txt";
+        String resultfile = "data/ners.txt";
 
 
         // StanfordCoreNLP pipeline = new StanfordCoreNLP("StanfordCoreNLP-chinese.properties");
         StanfordCoreNLP pipeline = new StanfordCoreNLP("CoreNLP-chinese.properties");
-
 
         // Add your text here!
         WriteToFileExample fileExample = new WriteToFileExample();
@@ -44,15 +43,11 @@ public class CoreNLPSegment {
 
             String text = read;
             Annotation document = new Annotation(text);
-
             // run all Annotators on this text
             pipeline.annotate(document);
 
-
             // output
             List<CoreMap> sentences = document.get(CoreAnnotations.SentencesAnnotation.class);
-
-
             fileExample.writeFile(flag+" " , resultfile);
 
             for (CoreMap sentence : sentences) {
@@ -66,21 +61,8 @@ public class CoreNLPSegment {
                     // this is the NER label of the token
                     String ne = token.get(NamedEntityTagAnnotation.class);
 
-                    // System.out.println(word + "--" + pos + "--" + ne);
-
                     fileExample.writeFile(ne, resultfile);
                 }
-
-
-                // this is the parse tree of the current sentence
-                // Tree tree = sentence.get(TreeCoreAnnotations.TreeAnnotation.class);
-                // System.out.println(tree);
-
-
-                // this is the Stanford dependency graph of the current sentence
-                // SemanticGraph dependencies = sentence.get(SemanticGraphCoreAnnotations.CollapsedCCProcessedDependenciesAnnotation.class);
-                // System.out.println(dependencies);
-
             }
             // get entity comb
             fileExample.writeFile("\n", resultfile);
