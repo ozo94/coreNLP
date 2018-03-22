@@ -48,7 +48,6 @@ public class CoreNLPSegment {
 
             // output
             List<CoreMap> sentences = document.get(CoreAnnotations.SentencesAnnotation.class);
-            fileExample.writeFile(flag+" " , resultfile);
 
             for (CoreMap sentence : sentences) {
                 // traversing the words in the current sentence
